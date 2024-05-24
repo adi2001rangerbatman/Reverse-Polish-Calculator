@@ -14,6 +14,8 @@ void push(Stack *s, double value);
 double pop(Stack *s);
 double calculate(char op, double a, double b);
 
+//code
+
 int main() {
     system("color b");// define the text color
     Stack stack;
