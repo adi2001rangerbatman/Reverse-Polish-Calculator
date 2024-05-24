@@ -10,27 +10,30 @@ typedef struct {
 } Stack;
 
 // Function prototypes
+void initializeStack(Stack *s);
 void push(Stack *s, double value);
 double pop(Stack *s);
 double calculate(char op, double a, double b);
-void initStack(Stack *s);
+void printStack(const Stack *s);
 
 int main() {
-    system("color b");// define the text color
+    // Commented out to avoid platform dependency
+    // system("color b"); // Define the text color
+    
     Stack stack;
-    initStack(&stack); // Initialize stack using initStack function
+    initializeStack(&stack);
 
     char token;
     double operand, a, b;
 
     // Home Display
     printf("\t\t\t\t\t=============================\n");
-    printf("\t\t\t\t\tReverse Polish Calculator\n");
+    printf("\t\t\t\t\t Reverse Polish Calculator\n");
     printf("\t\t\t\t\t=============================\n\n");
     printf("\t\t\t\t\tEnter your math expression: ");
 
     while (1) {
-        scanf("%c", &token);
+        scanf(" %c", &token); // Handle leading whitespaces
         if (token == '?') {
             scanf("%lf", &operand);
             push(&stack, operand);
@@ -39,19 +42,22 @@ int main() {
             a = pop(&stack);
             push(&stack, calculate(token, a, b));
         } else if (token == '=') {
-            printf("\t\t\t\t\t>>>%lf\n", stack.items[stack.top]);
+            printf("\t\t\t\t\t>>> %lf\n", stack.items[stack.top]);
             printf("\n\t\t\t\t\t");
         } else if (token == '#') { // Stop condition
             printf("\t\t\t\t\tGood Day!\n");
             break;
+        } else {
+            printf("\t\t\t\t\tInvalid input\n");
         }
+        printStack(&stack); // Print the stack state for debugging
     }
 
     return 0;
 }
 
 // Initialize the stack
-void initStack(Stack *s) {
+void initializeStack(Stack *s) {
     s->top = -1;
 }
 
@@ -89,7 +95,16 @@ double calculate(char op, double a, double b) {
             }
             return a / b;
         default:
-            printf("\t\t\t\tInvalid operator\n");
+            printf("\t\t\t\t\tInvalid operator\n");
             exit(EXIT_FAILURE);
     }
+}
+
+// Print the stack for debugging
+void printStack(const Stack *s) {
+    printf("\t\t\t\t\tStack state: ");
+    for (int i = 0; i <= s->top; i++) {
+        printf("%lf ", s->items[i]);
+    }
+    printf("\n");
 }
