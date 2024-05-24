@@ -13,13 +13,12 @@ typedef struct {
 void push(Stack *s, double value);
 double pop(Stack *s);
 double calculate(char op, double a, double b);
-
-//code
+void initStack(Stack *s);
 
 int main() {
     system("color b");// define the text color
     Stack stack;
-    stack.top = -1; // Initialize stack top
+    initStack(&stack); // Initialize stack using initStack function
 
     char token;
     double operand, a, b;
@@ -49,6 +48,11 @@ int main() {
     }
 
     return 0;
+}
+
+// Initialize the stack
+void initStack(Stack *s) {
+    s->top = -1;
 }
 
 // Push a value onto the stack
