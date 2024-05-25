@@ -17,7 +17,6 @@ double calculate(char op, double a, double b);
 void printStack(const Stack *s);
 
 int main() {
-    // Initialize the stack
     Stack stack;
     initializeStack(&stack);
 
@@ -28,7 +27,7 @@ int main() {
     printf("\t\t\t\t\t=============================\n");
     printf("\t\t\t\t\t Reverse Polish Calculator\n");
     printf("\t\t\t\t\t=============================\n\n");
-    printf("\t\t\t\t\tEnter your math expression (use '?' before numbers, e.g., '? 3'): ");
+    printf("\t\t\t\t\tEnter your math expression (use '?' before numbers, e.g., '? 3', and '=' to evaluate): ");
 
     while (1) {
         scanf(" %c", &token); // Handle leading whitespaces
@@ -37,11 +36,19 @@ int main() {
             scanf("%lf", &operand);
             push(&stack, operand);
         } else if (token == '+' || token == '-' || token == '*' || token == '/') {
+            if (stack.top < 1) {
+                printf("\t\t\t\t\tNot enough operands for operation '%c'\n", token);
+                continue;
+            }
             b = pop(&stack);
             a = pop(&stack);
             push(&stack, calculate(token, a, b));
         } else if (token == '=') {
-            printf("\t\t\t\t\t>>> %lf\n", stack.items[stack.top]);
+            if (stack.top < 0) {
+                printf("\t\t\t\t\tStack is empty. No result to display.\n");
+            } else {
+                printf("\t\t\t\t\t>>> %lf\n", stack.items[stack.top]);
+            }
             printf("\n\t\t\t\t\t");
         } else if (token == '#') { // Stop condition
             printf("\t\t\t\t\tGood Day!\n");
