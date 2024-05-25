@@ -17,23 +17,22 @@ double calculate(char op, double a, double b);
 void printStack(const Stack *s);
 
 int main() {
-    // Commented out to avoid platform dependency
-    // system("color b"); // Define the text color
-    
+    // Initialize the stack
     Stack stack;
     initializeStack(&stack);
 
     char token;
     double operand, a, b;
 
-    // Home Display
+    // Display the home screen
     printf("\t\t\t\t\t=============================\n");
     printf("\t\t\t\t\t Reverse Polish Calculator\n");
     printf("\t\t\t\t\t=============================\n\n");
-    printf("\t\t\t\t\tEnter your math expression: ");
+    printf("\t\t\t\t\tEnter your math expression (use '?' before numbers, e.g., '? 3'): ");
 
     while (1) {
         scanf(" %c", &token); // Handle leading whitespaces
+
         if (token == '?') {
             scanf("%lf", &operand);
             push(&stack, operand);
@@ -48,7 +47,7 @@ int main() {
             printf("\t\t\t\t\tGood Day!\n");
             break;
         } else {
-            printf("\t\t\t\t\tInvalid input\n");
+            printf("\t\t\t\t\tInvalid input. Please enter a valid operation or '? <number>' for operands.\n");
         }
         printStack(&stack); // Print the stack state for debugging
     }
@@ -64,7 +63,7 @@ void initializeStack(Stack *s) {
 // Push a value onto the stack
 void push(Stack *s, double value) {
     if (s->top == STACK_SIZE - 1) {
-        printf("\t\t\t\t\tStack Overflow\n");
+        printf("\t\t\t\t\tStack Overflow. Cannot push %lf\n", value);
         exit(EXIT_FAILURE);
     }
     s->items[++(s->top)] = value;
@@ -73,7 +72,7 @@ void push(Stack *s, double value) {
 // Pop a value from the stack
 double pop(Stack *s) {
     if (s->top == -1) {
-        printf("\t\t\t\t\tStack Underflow\n");
+        printf("\t\t\t\t\tStack Underflow. No more items to pop.\n");
         exit(EXIT_FAILURE);
     }
     return s->items[(s->top)--];
@@ -90,12 +89,12 @@ double calculate(char op, double a, double b) {
             return a * b;
         case '/':
             if (b == 0) {
-                printf("\t\t\t\t\tDivision by zero\n");
+                printf("\t\t\t\t\tDivision by zero error.\n");
                 exit(EXIT_FAILURE);
             }
             return a / b;
         default:
-            printf("\t\t\t\t\tInvalid operator\n");
+            printf("\t\t\t\t\tInvalid operator '%c'\n", op);
             exit(EXIT_FAILURE);
     }
 }
