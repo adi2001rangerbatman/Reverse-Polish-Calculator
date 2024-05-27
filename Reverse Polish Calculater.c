@@ -25,7 +25,7 @@ int main() {
 
     // Display the home screen
     printf("\t\t\t\t\t=============================\n");
-    printf("\t\t\t\t\t Reverse Polish Calculator\n");
+    printf("\t\t\t\t\t ++Reverse Polish Calculator++\n");
     printf("\t\t\t\t\t=============================\n\n");
     printf("\t\t\t\t\tEnter your math expression (use '?' before numbers, e.g., '? 3', and '=' to evaluate): ");
 
